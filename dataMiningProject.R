@@ -41,10 +41,10 @@ large_forest = randomForest(admit~., data = ucla_train, ntree = 1000)
 k = knn(ucla_train, ucla_test, ucla_train$admit, k = 5)
 
 # 3-5. SVM(radial basis) 모델
-s = svm(admit~., data = ucla_train)
+s_r = svm(admit~., data = ucla_train)
 
 # 3-6. SVM(polynomial) 모델
-s = svm(admit~., data = ucla_train, kernel = 'polynomial')
+s_p = svm(admit~., data = ucla_train, kernel = 'polynomial')
 
 # 4. 테스트데이터로 예측하고, 예측결과를 혼동행렬로 출력하는 과정
 
@@ -67,9 +67,9 @@ k_p = knn(ucla_train, ucla_test, ucla_train$admit, k = 5)
 table(k_p, ucla_test$admit)
 
 # 4-5. SVM(radial basis) 테스트 데이터 예측
-svm_r_p = predict(s, newdata = ucla_test)
+svm_r_p = predict(s_r, newdata = ucla_test)
 table(svm_r_p, ucla_test$admit)
 
 # 4-6. SVM(polynomial) 테스트 데이터 예측
-svm_p_p = predict(s, newdata =  ucla_test)
+svm_p_p = predict(s_p, newdata =  ucla_test)
 table(svm_p_p, ucla_test$admit)
