@@ -1,3 +1,9 @@
+library(rpart)
+library(randomForest)
+library(caret)
+library(class)
+library(e1071)
+
 # 1. 데이터를 획득하고 모델을 적용하기 위한 준비과정
 ucla = read.csv('https://stats.idre.ucla.edu/stat/data/binary.csv')
 
@@ -20,3 +26,22 @@ nrow(ucla_train) # 개수
 ucla_test # 데이터
 nrow(ucla_test) # 개수
 
+# 3. 학습데이터로 모델을 만드는 과정(모델링)
+
+# 3-1. 결정트리 모델
+r = rpart(admit~., data = ucla_train)
+
+# 3-2. 랜덤포레스트(트리 개수 50개) 모델
+small_forest = randomForest(admit~., data = ucla_train, ntree = 50)
+
+# 3-3. 랜덤포레스트(트리 개수 1000개) 모델
+large_forest = randomForest(admit~., data = ucla_train, ntree = 1000)
+
+# 3-4. K-NN 모델
+k = knn(ucla_train, ucla_test, ucla_train$admit, k = 5)
+
+# 3-5. SVM(radial basis) 모델
+s = svm(admit~., data = ucla_train)
+
+# 3-6. SVM(polynomial) 모델
+s = svm(admit~., data = ucla_train, kernel = 'polynomial')
